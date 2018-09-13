@@ -25,15 +25,18 @@ namespace TodoApp
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<TodoContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            var connectionString = Configuration.GetConnectionString("DefaultConnection");
+            //services.AddDbContext<TodoContext>(options => options.UseSqlServer(connectionString));
+            services.AddEntityFrameworkNpgsql().AddDbContext<TodoContext>(options => options.UseNpgsql(connectionString));
 
-            services.AddMvc()
-                .AddXmlDataContractSerializerFormatters();
+            services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, TodoContext ctx)
         {
+            ctx.Seed();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

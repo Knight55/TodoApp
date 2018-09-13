@@ -2,31 +2,29 @@ import * as React from 'react';
 
 import './Hello.css';
 
-export interface Props {
+export interface HelloProps {
     name: string;
     enthusiasmLevel?: number;
+    onIncrement?: () => void;
+    onDecrement?: () => void;
 }
 
-export default class Hello extends React.Component < Props,
-object > {
-    render() {
-        const {
-            name,
-            enthusiasmLevel = 1
-        } = this.props;
-
-        if (enthusiasmLevel <= 0) {
-            throw new Error('You could be a little more enthusiastic.');
-        }
-
-        return (
-            <div className="hello">
-                <div className="greeting">
-                    Hello {name + getExclamationMarks(enthusiasmLevel)}
-                </div>
-            </div>
-        );
+export default function Hello({ name, enthusiasmLevel = 1, onIncrement, onDecrement }: HelloProps) {
+    if (enthusiasmLevel <= 0) {
+        throw new Error('You could be a little more enthusiastic.');
     }
+
+    return (
+        <div className="hello">
+            <div className="greeting">
+                Hello {name + getExclamationMarks(enthusiasmLevel)}
+            </div>
+            <div>
+                <button onClick={onIncrement}>+</button>
+                <button onClick={onDecrement}>-</button>
+            </div>
+        </div>
+    );
 }
 
 function getExclamationMarks(numChars: number) {

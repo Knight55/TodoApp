@@ -11,15 +11,15 @@ using TodoApp.Data;
 namespace TodoApp.Migrations
 {
     [DbContext(typeof(TodoContext))]
-    [Migration("20180225163450_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20180420211506_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.0.1-rtm-125")
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)
+                .HasAnnotation("ProductVersion", "2.0.2-rtm-10011");
 
             modelBuilder.Entity("TodoApp.Data.Todo", b =>
                 {
